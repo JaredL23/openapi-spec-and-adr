@@ -1,0 +1,46 @@
+
+openapi: 3.0.3
+info:
+  title: Claims Processing API
+  version: 0.1.0
+  description: Minimal API for demo portfolio
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+  /claims:
+    get:
+      summary: List claims
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create claim
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Claim'
+      responses:
+        '200':
+          description: Created
+components:
+  schemas:
+    Claim:
+      type: object
+      required: [member_id, amount]
+      properties:
+        member_id: { type: string }
+        amount: { type: number, format: float, minimum: 0 }
+        status: { type: string, default: submitted }
